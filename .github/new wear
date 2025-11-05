@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Wear - ملابس NBA الرسمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1d428a 0%, #c8102e 100%); color: #333; line-height: 1.6; }
+        header { background: rgba(255, 255, 255, 0.9); text-align: center; padding: 50px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .model-image { width: 150px; height: 150px; border-radius: 50%; margin: 20px auto; display: block; border: 5px solid #c8102e; }
+        nav { background: #fff; padding: 15px; display: flex; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        nav a { color: #1d428a; margin: 0 25px; text-decoration: none; font-weight: 700; transition: all 0.3s; padding: 10px 15px; border-radius: 5px; }
+        nav a:hover { background: #c8102e; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .hero { text-align: center; margin-bottom: 40px; }
+        .hero h2 { font-size: 2.5em; margin-bottom: 10px; color: white; }
+        .hero p { font-size: 1.2em; color: #f0f0f0; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .product { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
+        .product:hover { transform: translateY(-10px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
+        .product h3 { font-size: 1.5em; margin-bottom: 10px; color: #1d428a; }
+        .product p { font-size: 1.1em; color: #666; }
+        footer { background: #1d428a; color: white; text-align: center; padding: 30px; }
+        footer p { margin: 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NBA Wear</h1>
+        <p>مصدرك لملابس ومعدات NBA الرسمية</p>
+        <img src="https://via.placeholder.com/150?text=Model+Image" alt="صورة موديل" class="model-image">
+    </header>
+    <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#jerseys">القمصان</a>
+        <a href="#shoes">الأحذية</a>
+        <a href="#accessories">الإكسسوارات</a>
+        <a href="#contact">اتصل بنا</a>
+    </nav>
+    <div class="container">
+        <section id="home" class="hero">
+            <h2>مرحباً بك في NBA Wear</h2>
+            <p>تسوق أحدث منتجات NBA، من القمصان إلى الأحذية. دعم فرقك المفضلة!</p>
+        </section>
+        <section id="jerseys">
+            <h2 style="text-align: center; color: white; margin-bottom: 30px;">القمصان المميزة</h2>
+            <div class="products-grid">
+                <div class="product">
+                    <img src="https://via.placeholder.com/300?text=Lakers+Jersey" alt="قميص ليكرز">
+                    <h3>قميص لوس أنجلوس ليكرز</h3>
+                    <p>99.99 دولار</p>
+                </div>
+                <div class="product">
+                    <img src="https://via.placeholder.com/300?text=Celtics+Jersey" alt="قميص سيلتيكس">
+                    <h3>قميص بوسطن سيلتيكس</h3>
+                    <p>99.99 دولار</p>
+                </div>
+            </div>
+        </section>
+        <section id="shoes">
+            <h2 style="text-align: center; color: white; margin-bottom: 30px;">أحذية NBA</h2>
+            <div class="products-grid">
+                <div class="product">
+                    <img src="https://via.placeholder.com/300?text=Jordan+Shoes" alt="أحذية جوردان">
+                    <h3>أير جوردان</h3>
+                    <p>149.99 دولار</p>
+                </div>
+            </div>
+        </section>
+        <section id="accessories">
+            <h2 style="text-align: center; color: white; margin-bottom: 30px;">الإكسسوارات</h2>
+            <div class="products-grid">
+                <div class="product">
+                    <img src="https://via.placeholder.com/300?text=NBA+Hat" alt="قبعة NBA">
+                    <h3>قبعة سناب باك NBA</h3>
+                    <p>29.99 دولار</p>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="hero">
+            <h2>اتصل بنا</h2>
+            <p>البريد الإلكتروني: info@nba.wear | الهاتف: 1-800-NBA-WEAR</p>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2023 NBA Wear. جميع الحقوق محفوظة.</p>
+    </footer>
+</body>
+</html>
