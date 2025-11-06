@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA.wear | متجر الهوديات والملابس الرياضية الأنيقة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ff3c00;
+            --accent: #ffd700;
+            --light: #f8f8f8;
+            --gray: #777777;
+            --white: #ffffff;
+            --dark-bg: #1a1a1a;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-top {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .header-main {
+            padding: 1rem 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--secondary);
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .header-actions a {
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .header-actions a:hover {
+            color: var(--secondary);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background-color: var(--secondary);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1560009523-2d4f2fa0f61f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') no-repeat center center/cover;
+            color: var(--white);
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #e1e1e1;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--secondary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .category-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            height: 300px;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .category-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .category-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .category-card:hover .category-img img {
+            transform: scale(1.1);
+        }
+        
+        .category-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .category-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Products */
+        .products {
+            padding: 5rem 0;
+            background-color: var(--light);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .product-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 0.3rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--secondary);
+        }
+        
+        .wishlist {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .wishlist:hover {
+            color: var(--secondary);
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #e1e1e1;
+        }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 30px 0 0 30px;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-right: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 30px;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-btn {
+                border-radius: 30px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div style="text-align: center;">
+                    احصل على خصم 20% على أول طلبية لك باستخدام الكود: WELCOME20
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container header-container">
+                <a href="#" class="logo">NBA<span>.wear</span></a>
+                
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">الرئيسية</a></li>
+                    <li><a href="#">المتجر</a></li>
+                    <li><a href="#">هوديات</a></li>
+                    <li><a href="#">تيشيرتات</a></li>
+                    <li><a href="#">ملابس رياضية</a></li>
+                    <li><a href="#">عنا</a></li>
+                </ul>
+                
+                <div class="header-actions">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="#" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>هوديات رياضية بجودة فائقة</h1>
+                <p>اكتشف أحدث تشكيلات الهوديات الرياضية المصممة بأناقة لتلبي جميع أذواقك</p>
+                <a href="#" class="btn">تسوق الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">فئات المنتجات</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="هوديات">
+                    </div>
+                    <div class="category-content">
+                        <h3>هوديات</h3>
+                        <a href="#">اعرض المجموعة</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" alt="تيشيرتات">
+                    </div>
+                    <div class="category-content">
+                        <h3>تيشيرتات</h3>
+                        <a href="#">اعرض المجموعة</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1600250487941-3c06bc36c8bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="سراويل">
+                    </div>
+                    <div class="category-content">
+                        <h3>سراويل</h3>
+                        <a href="#">اعرض المجموعة</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="إكسسوارات">
+                    </div>
+                    <div class="category-content">
+                        <h3>إكسسوارات</h3>
+                        <a href="#">اعرض المجموعة</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">المنتجات الأكثر مبيعاً</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="هودي أسود">
+                        <span class="product-badge">جديد</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">هودي NBA الأساسي - أسود</h3>
+                        <p class="product-price">299 ج.م</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">أضف إلى السلة</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="هودي رمادي">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">هودي NBA الرياضي - رمادي</h3>
+                        <p class="product-price">349 ج.م</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">أضف إلى السلة</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="هودي أزرق">
+                        <span class="product-badge">الأكثر مبيعاً</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">هودي NBA المميز - أزرق</h3>
+                        <p class="product-price">379 ج.م</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">أضف إلى السلة</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="هودي أخضر">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">هودي NBA الكلاسيكي - أخضر</h3>
+                        <p class="product-price">329 ج.م</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">أضف إلى السلة</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>اشترك في نشرتنا البريدية</h2>
+            <p>كن أول من يعرف عن المنتجات الجديدة والعروض الحصرية والخصومات</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="بريدك الإلكتروني">
+                <button type="submit" class="newsletter-btn">اشتراك</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="footer-heading">NBA.wear</h3>
+                    <p>متجرنا يقدم لكم أفضل الهوديات والملابس الرياضية بجودة عالية وتصميمات عصرية تناسب جميع الأذواق.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">المتجر</a></li>
+                        <li><a href="#">هوديات</a></li>
+                        <li><a href="#">تيشيرتات</a></li>
+                        <li><a href="#">عنا</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">خدمة العملاء</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">اتصل بنا</a></li>
+                        <li><a href="#">الشحن والتوصيل</a></li>
+                        <li><a href="#">الإرجاع والاستبدال</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">معلومات التواصل</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope"></i> info@nba-wear.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 NBA.wear. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // دالة لإضافة منتج إلى السلة
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                // زيادة عدد العناصر في السلة
+                const cartCount = document.querySelector('.cart-count');
+                let count = parseInt(cartCount.textContent);
+                cartCount.textContent = count + 1;
+                
+                // تأثير عند النقر
+                this.textContent = 'تمت الإضافة';
+                this.style.backgroundColor = '#4caf50';
+                
+                setTimeout(() => {
+                    this.textContent = 'أضف إلى السلة';
+                    this.style.backgroundColor = '';
+                }, 1500);
+            });
+        });
+        
+        // دالة للإعجاب بالمنتج
+        document.querySelectorAll('.wishlist').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.replace('far', 'fas');
+                    icon.style.color = '#ff3c00';
+                } else {
+                    icon.classList.replace('fas', 'far');
+                    icon.style.color = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
