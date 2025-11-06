@@ -156,10 +156,19 @@
         }
         
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             font-size: 1.8rem;
             font-weight: 700;
             text-decoration: none;
             color: var(--black);
+        }
+        
+        .logo-image {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
         }
         
         nav ul {
@@ -431,7 +440,10 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <a href="#" class="logo">NBA.wear</a>
+            <a href="#" class="logo">
+                <img src="logo.png" alt="NBA.wear Logo" class="logo-image">
+                <span>NBA.wear</span>
+            </a>
             
             <nav>
                 <ul>
