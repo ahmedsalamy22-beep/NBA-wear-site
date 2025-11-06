@@ -1,1 +1,336 @@
-<!doctype html><html lang='ar' dir='rtl'><head><meta charset='utf-8'><title>التشكيلة</title><link href='https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css' rel='stylesheet'></head><body class='p-6 bg-gray-50'><h1 class='text-3xl font-bold mb-6 text-center'>التشكيلة</h1><div id='products' class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'></div><script>fetch('products.json').then(r=>r.json()).then(p=>{document.getElementById('products').innerHTML=p.map(x=>`<div class='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow'><a href='product.html?id=${x.id}'><img src='${x.images[0]}' alt='${x.name_ar}' class='w-full h-64 object-cover'><div class='p-4'><h2 class='text-xl font-semibold mb-2'>${x.name_ar}</h2><div class='flex justify-between items-center'><span class='text-2xl font-bold text-green-600'>${x.price_egp} جنيه</span>${x.original_price_egp?`<span class='text-gray-500 line-through'>${x.original_price_egp} جنيه</span>`:''}</div></div></a></div>`).join('');});</script></body></html>
+<!DOCTYPE html>
+<html lang='ar' dir='rtl'>
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التشكيلة - NBA.wear</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+        
+        :root {
+            --black: #0a0a0a;
+            --dark: #1a1a1a;
+            --gray: #8a8a8a;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --accent: #c89b3c;
+            --beige: #e6dfd5;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e6dfd5 100%);
+            color: var(--black);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--black), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            animation: slideUp 0.8s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            text-decoration: none;
+            color: var(--black);
+            display: block;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent), var(--black));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            border-radius: 20px;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .product-card:hover::before {
+            opacity: 0.05;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            background: var(--beige);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.15) rotate(2deg);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: var(--black);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(200, 155, 60, 0.4);
+        }
+        
+        .product-info {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--black);
+            line-height: 1.4;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .product-pricing {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        
+        .product-original-price {
+            font-size: 1.3rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            font-weight: 500;
+        }
+        
+        .product-discount {
+            background: #e74c3c;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .feature-tag {
+            background: var(--light);
+            color: var(--black);
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        
+        .view-button {
+            width: 100%;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .product-card:hover .view-button {
+            background: var(--accent);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--black);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--accent);
+            color: var(--black);
+            transform: translateX(5px);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .product-image {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-right"></i>
+            العودة للرئيسية
+        </a>
+        
+        <div class="header">
+            <h1>مجموعتنا المميزة</h1>
+            <p>اكتشف أجود أنواع الهوديز بتصميمات عصرية وجودة استثنائية</p>
+        </div>
+        
+        <div id='products' class='products-grid'></div>
+    </div>
+    
+    <script>
+        fetch('products.json')
+            .then(r => r.json())
+            .then(products => {
+                const grid = document.getElementById('products');
+                grid.innerHTML = products.map(p => {
+                    const discount = p.original_price_egp ? 
+                        Math.round((1 - p.price_egp / p.original_price_egp) * 100) : 0;
+                    
+                    return `
+                        <a href='product.html?id=${p.id}' class='product-card'>
+                            <div class='product-image'>
+                                ${discount > 0 ? `<div class='product-badge'>خصم ${discount}%</div>` : ''}
+                                <img src='${p.images[0]}' alt='${p.name_ar}'>
+                            </div>
+                            <div class='product-info'>
+                                <h2 class='product-title'>${p.name_ar}</h2>
+                                <p class='product-description'>${p.description_ar ? p.description_ar.split('\n')[0] : ''}</p>
+                                <div class='product-pricing'>
+                                    <span class='product-price'>${p.price_egp} جنيه</span>
+                                    ${p.original_price_egp ? `
+                                        <span class='product-original-price'>${p.original_price_egp} جنيه</span>
+                                    ` : ''}
+                                </div>
+                                <div class='product-features'>
+                                    ${p.fit ? `<span class='feature-tag'>${p.fit}</span>` : ''}
+                                    ${p.made_in ? `<span class='feature-tag'>صنع في ${p.made_in}</span>` : ''}
+                                    ${p.unisex ? `<span class='feature-tag'>للجنسين</span>` : ''}
+                                </div>
+                                <button class='view-button'>عرض التفاصيل</button>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            })
+            .catch(err => console.error('Error loading products:', err));
+    </script>
+</body>
+</html>
