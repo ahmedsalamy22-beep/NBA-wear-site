@@ -1,1 +1,532 @@
-<!doctype html><html lang='ar' dir='rtl'><head><meta charset='utf-8'><title>منتج</title><link href='https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css' rel='stylesheet'></head><body class='p-6 bg-gray-50'><div id='product' class='max-w-6xl mx-auto'></div><script>const id=new URLSearchParams(location.search).get('id');fetch('products.json').then(r=>r.json()).then(ps=>{const p=ps.find(i=>i.id==id)||ps[0];document.getElementById('product').innerHTML=`<div class='bg-white rounded-lg shadow-lg p-8'><div class='grid md:grid-cols-2 gap-8'><div><div class='grid grid-cols-2 gap-2'>${p.images.map(img=>`<img src='${img}' alt='${p.name_ar}' class='w-full h-48 object-cover rounded'>`).join('')}</div></div><div><h1 class='text-3xl font-bold mb-4'>${p.name_ar}</h1><div class='mb-4'><span class='text-3xl font-bold text-green-600'>${p.price_egp} جنيه</span>${p.original_price_egp?`<span class='text-xl text-gray-500 line-through mr-4'>${p.original_price_egp} جنيه</span>`:''}</div><p class='text-gray-700 mb-6 whitespace-pre-line'>${p.description_ar}</p><form class='add-to-cart-form' data-id='${p.id}' data-name='${p.name_ar}' data-price='${p.price_egp}'><div class='mb-4'><label class='block font-semibold mb-2'>المقاس</label><select name='size' class='w-full p-2 border rounded'>${p.sizes.map(s=>`<option>${s}</option>`).join('')}</select></div><div class='mb-4'><label class='block font-semibold mb-2'>اللون</label><select name='color' class='w-full p-2 border rounded'>${p.colors.map(c=>`<option>${c}</option>`).join('')}</select></div><button type='submit' class='w-full bg-black text-white p-3 rounded hover:bg-gray-800 transition-colors text-lg font-semibold'>أضف للسلة</button></form></div></div></div>`;});</script><script src='script.js'></script></body></html>
+<!DOCTYPE html>
+<html lang='ar' dir='rtl'>
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج - NBA.wear</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+        
+        :root {
+            --black: #0a0a0a;
+            --dark: #1a1a1a;
+            --gray: #8a8a8a;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --accent: #c89b3c;
+            --beige: #e6dfd5;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e6dfd5 100%);
+            color: var(--black);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--black);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--accent);
+            color: var(--black);
+            transform: translateX(5px);
+        }
+        
+        .product-container {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            animation: fadeIn 0.6s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .images-section {
+            background: var(--beige);
+            padding: 3rem;
+        }
+        
+        .main-image-container {
+            width: 100%;
+            height: 600px;
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            position: relative;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .main-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: #e74c3c;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
+            z-index: 10;
+        }
+        
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        
+        .thumbnail {
+            height: 140px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .thumbnail:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .thumbnail.active {
+            border-color: var(--black);
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .details-section {
+            padding: 4rem;
+        }
+        
+        .product-header {
+            margin-bottom: 2rem;
+        }
+        
+        .product-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: var(--black);
+        }
+        
+        .product-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .pricing-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: 16px;
+        }
+        
+        .current-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent);
+        }
+        
+        .original-price {
+            font-size: 1.8rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+        
+        .save-amount {
+            background: #27ae60;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        .description-section {
+            margin-bottom: 2.5rem;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .description-section p {
+            margin-bottom: 0.8rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .feature-item {
+            background: var(--light);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: var(--beige);
+            transform: translateX(-5px);
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--black);
+            color: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        
+        .feature-text {
+            flex: 1;
+        }
+        
+        .feature-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+        
+        .feature-value {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--black);
+        }
+        
+        .selection-group {
+            margin-bottom: 2rem;
+        }
+        
+        .selection-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: block;
+            color: var(--black);
+        }
+        
+        .selection-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        
+        .option-button {
+            padding: 0.9rem 1.8rem;
+            background: var(--light);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--black);
+        }
+        
+        .option-button:hover {
+            border-color: var(--accent);
+            background: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        .option-button.selected {
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+        
+        .add-to-cart-button {
+            width: 100%;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 1.5rem;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        
+        .add-to-cart-button:hover {
+            background: var(--accent);
+            color: var(--black);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(200, 155, 60, 0.4);
+        }
+        
+        .add-to-cart-button:active {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 1024px) {
+            .product-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-image-container {
+                height: 500px;
+            }
+            
+            .details-section {
+                padding: 3rem 2rem;
+            }
+            
+            .product-title {
+                font-size: 2.2rem;
+            }
+            
+            .current-price {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .thumbnails {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-image-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="collection.html" class="back-button">
+            <i class="fas fa-arrow-right"></i>
+            العودة للتشكيلة
+        </a>
+        
+        <div id='product' class='product-container'></div>
+    </div>
+    
+    <script>
+        const id = new URLSearchParams(location.search).get('id');
+        
+        fetch('products.json')
+            .then(r => r.json())
+            .then(products => {
+                const product = products.find(p => p.id === id) || products[0];
+                const discount = product.original_price_egp ? 
+                    Math.round((1 - product.price_egp / product.original_price_egp) * 100) : 0;
+                const saveAmount = product.original_price_egp ? 
+                    product.original_price_egp - product.price_egp : 0;
+                
+                document.getElementById('product').innerHTML = `
+                    <div class="product-layout">
+                        <div class="images-section">
+                            <div class="main-image-container">
+                                ${discount > 0 ? `<div class="discount-badge">خصم ${discount}%</div>` : ''}
+                                <img src="${product.images[0]}" alt="${product.name_ar}" class="main-image" id="mainImage">
+                            </div>
+                            <div class="thumbnails">
+                                ${product.images.map((img, idx) => `
+                                    <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
+                                        <img src="${img}" alt="${product.name_ar}">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="details-section">
+                            <div class="product-header">
+                                <h1 class="product-title">${product.name_ar}</h1>
+                                <p class="product-subtitle">${product.name_en || ''}</p>
+                            </div>
+                            
+                            <div class="pricing-section">
+                                <span class="current-price">${product.price_egp} جنيه</span>
+                                ${product.original_price_egp ? `
+                                    <span class="original-price">${product.original_price_egp} جنيه</span>
+                                    <span class="save-amount">وفر ${saveAmount} جنيه</span>
+                                ` : ''}
+                            </div>
+                            
+                            <div class="description-section">
+                                ${product.description_ar.split('\n').map(line => 
+                                    `<p><i class="fas fa-check-circle" style="color: var(--accent); margin-left: 0.5rem;"></i>${line}</p>`
+                                ).join('')}
+                            </div>
+                            
+                            <div class="features-grid">
+                                ${product.material ? `
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-tshirt"></i></div>
+                                        <div class="feature-text">
+                                            <div class="feature-label">الخامة</div>
+                                            <div class="feature-value">${product.material}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${product.weight ? `
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-weight"></i></div>
+                                        <div class="feature-text">
+                                            <div class="feature-label">الوزن</div>
+                                            <div class="feature-value">${product.weight}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${product.fit ? `
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-ruler"></i></div>
+                                        <div class="feature-text">
+                                            <div class="feature-label">القصّة</div>
+                                            <div class="feature-value">${product.fit}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${product.made_in ? `
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                        <div class="feature-text">
+                                            <div class="feature-label">صنع في</div>
+                                            <div class="feature-value">${product.made_in}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            
+                            <form class="add-to-cart-form" data-id="${product.id}" data-name="${product.name_ar}" data-price="${product.price_egp}">
+                                <div class="selection-group">
+                                    <label class="selection-label">
+                                        <i class="fas fa-expand-arrows-alt" style="margin-left: 0.5rem;"></i>
+                                        اختر المقاس
+                                    </label>
+                                    <div class="selection-options">
+                                        ${product.sizes.map((size, idx) => `
+                                            <input type="radio" name="size" value="${size}" id="size-${idx}" 
+                                                ${idx === 0 ? 'checked' : ''} style="display: none;">
+                                            <label for="size-${idx}" class="option-button ${idx === 0 ? 'selected' : ''}" 
+                                                onclick="selectOption(this, 'size-${idx}')">${size}</label>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="selection-group">
+                                    <label class="selection-label">
+                                        <i class="fas fa-palette" style="margin-left: 0.5rem;"></i>
+                                        اختر اللون
+                                    </label>
+                                    <div class="selection-options">
+                                        ${product.colors.map((color, idx) => `
+                                            <input type="radio" name="color" value="${color}" id="color-${idx}" 
+                                                ${idx === 0 ? 'checked' : ''} style="display: none;">
+                                            <label for="color-${idx}" class="option-button ${idx === 0 ? 'selected' : ''}" 
+                                                onclick="selectOption(this, 'color-${idx}')">${color}</label>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="add-to-cart-button">
+                                    <i class="fas fa-shopping-cart" style="margin-left: 1rem;"></i>
+                                    أضف إلى السلة
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            })
+            .catch(err => console.error('Error loading product:', err));
+        
+        function changeImage(imgSrc, thumbnail) {
+            document.getElementById('mainImage').src = imgSrc;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+        }
+        
+        function selectOption(label, inputId) {
+            const input = document.getElementById(inputId);
+            const group = label.closest('.selection-options');
+            group.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+            label.classList.add('selected');
+            input.checked = true;
+        }
+    </script>
+    <script src='script.js'></script>
+</body>
+</html>
