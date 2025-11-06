@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "green-hoodie-oversized",
+    "name_en": "Green Oversized Hoodie",
+    "name_ar": "هودي أخضر Oversized",
+    "price_egp": 650,
+    "original_price_egp": 900,
+    "description_ar": "خامة قطن × فايبر معالجة ممتازة\nوزن تقريبي: 850g\nقصّة: Oversized\nصناعة مصرية بجودة عالمية\nمناسب للجنسين (Unisex)",
+    "description_en": "Premium cotton × fiber blend\nApproximate weight: 850g\nFit: Oversized\nMade in Egypt with international quality\nUnisex",
+    "material": "قطن × فايبر معالجة ممتازة",
+    "weight": "850g",
+    "fit": "Oversized",
+    "made_in": "مصر",
+    "unisex": true,
+    "images": [
+      "images/products/green-hoodie-0.png",
+      "images/products/green-hoodie-1.png",
+      "images/products/green-hoodie-2.png",
+      "images/products/green-hoodie-3.png"
+    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "colors": ["أخضر داكن"]
+  }
+]
