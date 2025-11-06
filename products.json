@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "name_ar": "هودي كلاسيك",
+    "name_en": "Classic Hoodie",
+    "price_egp": 650,
+    "colors": [
+      "اسود",
+      "رمادي"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": 2,
+    "name_ar": "هودي ليمتد",
+    "name_en": "Limited Hoodie",
+    "price_egp": 850,
+    "colors": [
+      "بوردو",
+      "اسود"
+    ],
+    "sizes": [
+      "M",
+      "L"
+    ]
+  }
+]
