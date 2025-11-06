@@ -1,0 +1,53 @@
+<!-- Language toggle -->
+<button id="lang-toggle" style="position:fixed;left:12px;top:12px;padding:8px;">عربي / EN</button>
+
+<script>
+const translations = {
+  ar: {
+    payNow: 'ادفع الآن',
+    orderSummary: 'المجموع: ',
+    payPayPal: 'ادفع عبر PayPal'
+  },
+  en: {
+    payNow: 'Pay Now',
+    orderSummary: 'Total: ',
+    payPayPal: 'Pay with PayPal'
+  }
+};
+
+let lang = 'ar'; // الوضع الافتراضي عربي
+function applyLang(l) {
+  lang = l;
+  document.documentElement.lang = (l === 'ar' ? 'ar' : 'en');
+  document.documentElement.dir = (l === 'ar' ? 'rtl' : 'ltr');
+
+  // أمثلة استبدال نصوص
+  const payBtn = document.getElementById('pay-now');
+  if (payBtn) payBtn.textContent = translations[l].payNow;
+
+  const summary = document.getElementById('order-summary');
+  if (summary) summary.innerHTML = translations[l].orderSummary + '<strong>جنيه 900</strong>';
+}
+document.getElementById('lang-toggle').addEventListener('click', () => {
+  applyLang(lang === 'ar' ? 'en' : 'ar');
+});
+
+// تطبيق البداية
+applyLang('ar');
+</script>
+<!-- Simple Pay Link Button (Arabic) -->
+<div id="payment-area" dir="rtl" style="font-family: Arial, sans-serif;">
+  <h2>إتمام الدفع</h2>
+  <p id="order-summary">المجموع: <strong>جنيه 900</strong></p>
+
+  <!-- Replace YOUR_PAYMENT_LINK with the payment URL from Stripe/Paymob/PayPal -->
+  <a id="pay-now" href="YOUR_PAYMENT_LINK" target="_blank"
+     class="btn" style="display:inline-block;padding:12px 20px;background:#0a0a0a;color:#fff;text-decoration:none;border-radius:6px;">
+    ادفع الآن
+  </a>
+
+  <p style="margin-top:10px;font-size:0.9em;color:#666;">
+    سيتم فتح صفحة الدفع الآمنة. بعد الدفع، سيتم إعادة التوجيه للمتجر.
+  </p>
+</div>
+
